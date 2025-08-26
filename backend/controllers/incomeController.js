@@ -2,7 +2,8 @@ const User = require("../models/User");
 const Income = require("../models/Income");
 //add income siurce
 exports.addIncome = async (req,res) =>{
-  const userId = req.user.id;
+    console.log("re.use",req.user)
+  const userId = req.user?._id;
 
   try{
     const {icon , source , amount , date}= req.body;
@@ -21,17 +22,32 @@ exports.addIncome = async (req,res) =>{
     await newIncome.save();
     res.status(200).json(newIncome)
   }catch(e){
-     res.status(500).json({message:"Internal Server Error"})
+     res.status(500).json({message:e.message, error:e.error});
   }
 }
 //get all icome sources
 exports.getAllIncome= async (req,res) =>{
-    
+    const userId = req.user.id;
+
+    try{
+        const income = await Income.find({userId}).sort({date:-1});
+        res.json(income);
+    }catch(e){
+        res.status(500).json({message:"Server Error"});
+    }
+
 }
 
 //delete income source
 exports.deleteIncome = async (req,res) =>{
-    
+    const userId = req.user.id;
+
+    try{
+        await Income.findByIdAndDelete(req.params.id);
+        res.json({message:"Income deleted successfully"});
+    }catch(error){
+        res.status(500).json({message:"Internal Server Error"});
+    }
 }
 //download excel
 exports.downloadIncomeExcel = async (req,res) =>{
