@@ -22,7 +22,7 @@ app.use("/api/v1/auth",authRoutes);
 
 app.use("/uploads",express.static(path.join(__dirname,"uploads")));
 app.use("/api/v1/income", incomeRoutes);
-//app.use("api/v1/expense",expenseRoutes);
+app.use("/api/v1/expense", expenseRoutes);
 
 app.listen(process.env.PORT,()=>{
    console.log(`server is running on the port  ${process.env.PORT}`)
