@@ -1,29 +1,53 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AuthLayout from "../../components/layout/AuthLayout";
 import { useNavigate } from 'react-router-dom';
 import Input from "../../components/Inputs/Input";
 import { validateEmail } from "../../utils/helper";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPath";
+import {UserContext} from "../../context/UserContext";
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-
+    const {updateUser} = useContext(UserContext)
     const navigate = useNavigate();
-    const handleLogin = async (e) => { 
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        if(!validateEmail(email)){
+        if (!validateEmail(email)) {
             setError("PLease enter a valid email address");
             return;
         }
-        if(!password){
+        if (!password) {
             setError("please enter the password");
             return;
         }
         setError("");
 
         //login api call
+        try {
+            const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+                email,
+                password,
+            });
+
+            const { token, user } = response.data;
+            if (token) {
+                localStorage.setItem("token", token);
+                updateUser(user);
+                navigate("/dashboard");
+            }
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError("Something went wrong. Please try again");
+            }
+        }
+
     }
     return (
         <AuthLayout>
@@ -31,7 +55,7 @@ const Login = () => {
                 <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
                     <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
                     <p className="text-xs text-slate-700 mt-[5px] mb-6">Please enter your details to log in</p>
-                    <form onSubmit={(e)=>handleLogin(e)}>
+                    <form onSubmit={(e) => handleLogin(e)}>
                         <Input
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

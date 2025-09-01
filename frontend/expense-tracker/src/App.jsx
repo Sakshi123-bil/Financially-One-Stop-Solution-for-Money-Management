@@ -8,9 +8,11 @@ import SignUp from './pages/Auth/SignUp';
 import Home from './pages/DashBoard/Home';
 import Income from './pages/DashBoard/Income';
 import Expense from './pages/DashBoard/Expense';
+import UserProvider from './context/UserContext';
 function App() {
   return (
-    <>
+    <div>
+      <UserProvider>
         <Router>
           <Routes>
             <Route path="/" element={<Root />} />
@@ -22,7 +24,8 @@ function App() {
 
           </Routes>
         </Router>
-    </>
+        </UserProvider>
+    </div>
   )
 }
 
