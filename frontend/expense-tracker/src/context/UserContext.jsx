@@ -1,30 +1,32 @@
-import React, { useState, createContext , useEffect } from "react";
+import React, { useState, createContext, useEffect } from "react";
+
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    const updateUser = (userData) => {
-        setUser(userData);
-        localStorage.setItem("user",JSON.stringify(userData))
+  const updateUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  const clearUser = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");   // ✅ use key "user"
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));                // ✅ parse it
     }
-    const clearUser = () => {
-        setUser(null);
-    }
-    useEffect(()=>{
-       const storedUser = localStorage.getItem(JSON.parse(user));
-       setUser(storedUser);
-      },[])
-    return (
-        <UserContext.Provider
-            value={{
-                user,
-                updateUser,
-                clearUser
-            }}
-        >
-            {children}
-        </UserContext.Provider>
-    )
-}
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ user, updateUser, clearUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
 export default UserProvider;

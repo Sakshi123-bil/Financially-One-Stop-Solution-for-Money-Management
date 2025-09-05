@@ -38,6 +38,7 @@ const Login = () => {
             if (token) {
                 localStorage.setItem("token", token);
                 updateUser(user);
+                localStorage.setItem("user", JSON.stringify(userData));
                 navigate("/dashboard");
             }
         } catch (error) {
