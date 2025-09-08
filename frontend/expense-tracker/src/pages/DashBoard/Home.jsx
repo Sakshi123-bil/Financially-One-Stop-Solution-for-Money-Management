@@ -7,8 +7,10 @@ import axiosInstance from "../../utils/axiosInstance";
 import { LuHandCoins , LuWalletMinimal } from "react-icons/lu";
 import {IoMdCard} from "react-icons/io";
 import { addThousandsSeparator } from "../../utils/helper";
-import InfoCard from "../../components/Cards.jsx/InfoCard";
+import InfoCard from "../../components/Cards/InfoCard";
 import RecentTransactions from "../../components/Dashboard/RecentTransactions";
+import FinanceOverview from "../../components/Dashboard/FinanceOverview";
+import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions";
 const Home = () => {
   useUserAuth();
   const navigate = useNavigate();
@@ -73,9 +75,23 @@ const Home = () => {
          <RecentTransactions
          transactions={dashboardData?.RecentTransactions}
          onSeeMore ={()=>navigate("/expense")}
-         >
+         ></RecentTransactions>
 
-         </RecentTransactions>
+         <FinanceOverview
+         totalBalance={dashboardData?.totalBalance || 0}
+         totalIncome={dashboardData?.totalIncome ||0}
+         totalExpense={dashboardData?.totalExpense}
+         >
+         </FinanceOverview>
+
+         <ExpenseTransactions
+         transactions={dashboardData?.last30DaysExpense?.transactions}
+         onSeeMore={()=>navigate("/expense")}
+         />
+
+         <last30DaysExpense
+         data={dashboardData?.last30DaysExpense?.transactions || {}}
+         />
       </div>
     </DashboardLayout>
   )
