@@ -7,11 +7,13 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
-    Cell
+    Cell,
+    CartesianGrid 
+    
 } from "recharts";
 const CustomBarChart = ({ data }) => {
     // functions to alternate colors
-    getBarColor = (index) => {
+    const getBarColor = (index) => {
         return index % 2 === 0 ? "#875cf5" : "#cfbefb"
     };
     const CustomTooltip = ({ active, payload }) => {

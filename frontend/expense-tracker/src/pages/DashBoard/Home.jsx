@@ -11,6 +11,8 @@ import InfoCard from "../../components/Cards/InfoCard";
 import RecentTransactions from "../../components/Dashboard/RecentTransactions";
 import FinanceOverview from "../../components/Dashboard/FinanceOverview";
 import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions";
+import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
+import RecentIncome from "../../components/Dashboard/RecentIncome";
 const Home = () => {
   useUserAuth();
   const navigate = useNavigate();
@@ -73,7 +75,7 @@ const Home = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
          <RecentTransactions
-         transactions={dashboardData?.RecentTransactions}
+         transactions={dashboardData?.RecentTransactions || []}
          onSeeMore ={()=>navigate("/expense")}
          ></RecentTransactions>
 
@@ -90,7 +92,17 @@ const Home = () => {
          />
 
          <last30DaysExpense
-         data={dashboardData?.last30DaysExpense?.transactions || {}}
+         data={dashboardData?.last30DaysExpense?.transactions || []}
+         />
+
+         <RecentIncomeWithChart
+         data={dashboardData?.last60DaysIncome?.transactions?.slice(0,4) || []}
+         totalIncome={dashboardData?.totalIncome || 0}
+         />
+
+         <RecentIncome
+         transactions={dashboardData?.last60DaysIncome?.transactions || []}
+         onSeeMore={()=>navigate("/income")}
          />
       </div>
     </DashboardLayout>
