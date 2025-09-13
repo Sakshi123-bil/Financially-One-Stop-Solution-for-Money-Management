@@ -9,10 +9,12 @@ import Home from './pages/DashBoard/Home';
 import Income from './pages/DashBoard/Income';
 import Expense from './pages/DashBoard/Expense';
 import UserProvider from './context/UserContext';
+import {Toaster} from "react-hot-toast";
 function App() {
   return (
-    <div>
-      <UserProvider>
+
+    <UserProvider>
+      <div>
         <Router>
           <Routes>
             <Route path="/" element={<Root />} />
@@ -24,8 +26,18 @@ function App() {
 
           </Routes>
         </Router>
-        </UserProvider>
-    </div>
+      </div>
+
+      <Toaster 
+      toastOptions={{
+        className:"",
+        style:{
+          fontSize:"13px"
+        },
+      }}
+      />
+    </UserProvider>
+
   )
 }
 

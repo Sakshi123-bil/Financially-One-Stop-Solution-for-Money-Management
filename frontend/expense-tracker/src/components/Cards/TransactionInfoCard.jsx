@@ -1,4 +1,4 @@
-import { LuTrendingDown, LuTrendingUp } from "react-icons/lu";
+import { LuTrendingDown, LuTrendingUp ,LuUtensils,LuTrash2} from "react-icons/lu";
 
 const TransactionInfoCard = ({
   title,
@@ -7,6 +7,7 @@ const TransactionInfoCard = ({
   amount,
   type,
   hideDeleteBtn,
+  onDelete
 }) => {
   const getAmountStyles = () =>{
     type==="income" ? "bg-green-50 text-green-500":"bg-red-50 text-red-500"
@@ -30,7 +31,7 @@ const TransactionInfoCard = ({
         <div className="flex items-center gap-2">
          {!hideDeleteBtn && (
             <button 
-            className="text-gray-400 hove:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+            className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
             onClick={onDelete}
             >
             <LuTrash2 size={18}/>
