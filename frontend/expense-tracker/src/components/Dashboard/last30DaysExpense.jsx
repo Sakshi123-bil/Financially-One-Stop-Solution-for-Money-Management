@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { prepareExpenseChartData } from "../../utils/helper";
+import CustomBarChart from "./CustomBarChart";
 
 const Last30DaysExpense = ({data}) =>{
     const [chartData , setChartData] = useState([]);
@@ -10,7 +11,7 @@ const Last30DaysExpense = ({data}) =>{
 
       return () => {};
     },[data]);
-
+    
     return(
       <div className="card col-span-1">
         <div className="flex items-center justify-center">

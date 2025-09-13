@@ -13,6 +13,7 @@ import FinanceOverview from "../../components/Dashboard/FinanceOverview";
 import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions";
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
+import Last30DaysExpense from "../../components/Dashboard/last30DaysExpense";
 const Home = () => {
   useUserAuth();
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const Home = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
          <RecentTransactions
-         transactions={dashboardData?.RecentTransactions || []}
+         transactions={dashboardData?.recentTransactions.slice(0,4) || []}
          onSeeMore ={()=>navigate("/expense")}
          ></RecentTransactions>
 
@@ -87,13 +88,11 @@ const Home = () => {
          </FinanceOverview>
 
          <ExpenseTransactions
-         transactions={dashboardData?.last30DaysExpense?.transactions}
+         transactions={dashboardData?.last30DaysExpenses?.transactions.slice(0,4)}
          onSeeMore={()=>navigate("/expense")}
          />
 
-         <last30DaysExpense
-         data={dashboardData?.last30DaysExpense?.transactions || []}
-         />
+         <Last30DaysExpense data={dashboardData?.last30DaysExpenses?.transactions}/>
 
          <RecentIncomeWithChart
          data={dashboardData?.last60DaysIncome?.transactions?.slice(0,4) || []}

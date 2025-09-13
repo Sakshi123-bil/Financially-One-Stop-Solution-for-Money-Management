@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import IncomeOverview from "../../components/Income/IncomeOverview";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
 import Modal from "../../components/layouts/Modal";
-import AddIncomeForm from "../../components/Income/AddIncomeForm";
+import AddExpenseForm from "../../components/expense/AddExpenseForm";
 import toast from "react-hot-toast";
-import IncomeList from "../../components/Income/IncomeList";
+import ExpenseList from "../../components/expense/expenseList";
 import DeleteAlert from "../../components/layouts/DeleteAlert";
 import { useUserAuth } from "../../hooks/useUserAuth";
+import ExpenseOverview from "../../components/expense/expenseOverview";
 const Expense = () => {
     useUserAuth();
     
@@ -44,8 +44,8 @@ const Expense = () => {
         const { category, amount, date, icon } = expense;
 
         // ✅ Validation Checks
-        if (!source.trim()) {
-            toast.error("Source is required.");
+        if (!category.trim()) {
+            toast.error("Category is required.");
             return;
         }
 
@@ -71,7 +71,7 @@ const Expense = () => {
 
             // Refresh expense list
             fetchExpenseDetails();
-            setOpenAddIncomeModal(false);
+            setOpenAddExpenseModal(false);
         } catch (error) {
             console.error("Error adding Expense:", error);
             toast.error("Something went wrong while adding income.");
@@ -106,13 +106,13 @@ const Expense = () => {
             <div className="my-5 mx-auto">
                 <div className="grid grid-cols-1 gap-6">
                     <div className="">
-                        <IncomeOverview
+                        <ExpenseOverview
                             transactions={expenseData}
-                            onAddIncome={() => setOpenAddExpenseModal(true)}
+                            onAddExpense={() => setOpenAddExpenseModal(true)}
                         />
                     </div>
 
-                    <IncomeList 
+                    <ExpenseList 
                     transactions={expenseData}
                     onDelete ={(id)=>{
                         setOpenDeleteAlert({show:true , data:id})
@@ -126,7 +126,7 @@ const Expense = () => {
                     onClose={() => setOpenAddExpenseModal(false)}
                     title="Add Expense"
                 >
-                    <AddIncomeForm onAddIncome={handleAddExpense} />
+                    <AddExpenseForm onAddExpense={handleAddExpense} />
                 </Modal>
 
                 <Modal 

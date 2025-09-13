@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { LuPlus } from "react-icons/lu";
 import CustomBarChart from "../Dashboard/CustomBarChart";
-import { prepareIncomeBarChartData } from "../../utils/helper";
+import { prepareExpenseLineChartData } from "../../utils/helper";
 
-const expenseOverview = ({ transactions, onAddIncome }) => {
+const ExpenseOverview = ({ transactions, onAddExpense }) => {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        const result = prepareIncomeBarChartData(transactions);
+        const result = prepareExpenseLineChartData(transactions);
         setChartData(result);
     }, [transactions]);
 
@@ -17,13 +17,13 @@ const expenseOverview = ({ transactions, onAddIncome }) => {
                 <div className="">
                     <h5 className="text-lg">Income Overview</h5>
                     <p className="text-xs text-gray-400 mt-0.5">
-                        Track your earnings over time and analyze your income trends.
+                        Track your Expenses over time and analyze your Expense trends.
                     </p>
                 </div>
 
-                <button className="add-btn" onClick={onAddIncome}>
+                <button className="add-btn" onClick={onAddExpense}>
                     <LuPlus className="text-lg" />
-                    Add Income
+                    Add Expense
                 </button>
             </div>
             <div className="mt-10">
@@ -33,4 +33,4 @@ const expenseOverview = ({ transactions, onAddIncome }) => {
     );
 };
 
-export default expenseOverview;
+export default ExpenseOverview;
