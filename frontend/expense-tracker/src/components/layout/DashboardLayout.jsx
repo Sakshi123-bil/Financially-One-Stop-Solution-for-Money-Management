@@ -5,9 +5,6 @@ import SideMenu from "./SideMenu";
 
 const DashboardLayout = ({ children, activeMenu }) => {
   const { user } = useContext(UserContext);
-  console.log("User object:", user);           // full object
-  console.log("User full name:", user.fullName); // specific property
-  console.log("User email:", user.email);
 
   return (
     <div className="">
