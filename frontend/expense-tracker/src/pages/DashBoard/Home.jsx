@@ -4,7 +4,7 @@ import { useUserAuth } from "../../hooks/useUserAuth";
 import { API_PATHS } from "../../utils/apiPath";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
-import { LuHandCoins , LuWalletMinimal } from "react-icons/lu";
+import { LuHandCoins , LuWalletMinimal} from "react-icons/lu";
 import {IoMdCard} from "react-icons/io";
 import { addThousandsSeparator } from "../../utils/helper";
 import InfoCard from "../../components/Cards/InfoCard";
@@ -17,7 +17,6 @@ import Last30DaysExpense from "../../components/Dashboard/last30DaysExpense";
 const Home = () => {
   useUserAuth();
   const navigate = useNavigate();
-
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -51,23 +50,27 @@ const Home = () => {
        
           <div className="my-5 mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {loading}
               <InfoCard
                 icon={<IoMdCard />}
                 label="Total Balance"
                 value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
                 color="bg-primary"
+                loading={loading}
               />
               <InfoCard
                 icon={<LuWalletMinimal/>}
                 label="Total Income"
                 value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
                 color="bg-orange-500"
+                loading={loading}
               />
               <InfoCard
                 icon={<LuHandCoins/>}
                 label="Total Expense"
                 value={addThousandsSeparator(dashboardData?.totalExpense || 0)}
                 color="bg-red-500"
+                loading={loading}
               />
             </div>
           </div>
@@ -78,30 +81,35 @@ const Home = () => {
          <RecentTransactions
          transactions={dashboardData?.recentTransactions.slice(0,4) || []}
          onSeeMore ={()=>navigate("/expense")}
+         loading={loading}
          ></RecentTransactions>
 
          <FinanceOverview
          totalBalance={dashboardData?.totalBalance || 0}
          totalIncome={dashboardData?.totalIncome ||0}
          totalExpense={dashboardData?.totalExpense}
+         loading={loading}
          >
          </FinanceOverview>
 
          <ExpenseTransactions
          transactions={dashboardData?.last30DaysExpenses?.transactions.slice(0,4)}
          onSeeMore={()=>navigate("/expense")}
+         loading={loading}
          />
 
-         <Last30DaysExpense data={dashboardData?.last30DaysExpenses?.transactions}/>
+         <Last30DaysExpense data={dashboardData?.last30DaysExpenses?.transactions} loading={loading}/>
 
          <RecentIncomeWithChart
          data={dashboardData?.last60DaysIncome?.transactions?.slice(0,4) || []}
          totalIncome={dashboardData?.totalIncome || 0}
+         loading={loading}
          />
 
          <RecentIncome
          transactions={dashboardData?.last60DaysIncome?.transactions || []}
          onSeeMore={()=>navigate("/income")}
+         loading={loading}
          />
       </div>
     </DashboardLayout>
