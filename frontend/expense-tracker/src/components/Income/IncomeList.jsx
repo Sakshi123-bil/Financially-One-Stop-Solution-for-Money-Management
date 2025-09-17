@@ -8,7 +8,7 @@ const IncomeList = ({ transactions, onDelete, onDownload }) => {
       <div className="flex items-center justify-between">
         <h5 className="text-lg">Income Sources</h5>
         <button className="card-bit" onClick={onDownload}> 
-          <LuDownload className="text-base" /> Download
+          <div className='flex'><LuDownload className="text-base mt-1 mr-1"/><div>Download</div></div>
         </button>
       </div>
 

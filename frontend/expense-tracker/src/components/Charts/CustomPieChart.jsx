@@ -27,7 +27,7 @@ const CustomPieChart = ({
                     cy="50%"
                     outerRadius={130}
                     innerRadius={100}
-                    label
+                    label={false}
                 >
                     {data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
