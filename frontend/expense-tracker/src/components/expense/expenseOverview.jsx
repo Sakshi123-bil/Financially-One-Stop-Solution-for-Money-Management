@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LuPlus } from "react-icons/lu";
-import CustomBarChart from "../Dashboard/CustomBarChart";
 import { prepareExpenseLineChartData } from "../../utils/helper";
+import CustomLineChart from "../Charts/CustomLineChart";
 
 const ExpenseOverview = ({ transactions, onAddExpense }) => {
     const [chartData, setChartData] = useState([]);
@@ -27,7 +27,7 @@ const ExpenseOverview = ({ transactions, onAddExpense }) => {
                 </button>
             </div>
             <div className="mt-10">
-                <CustomBarChart data={chartData}/>
+                <CustomLineChart data={chartData}/>
             </div>
         </div>
     );
