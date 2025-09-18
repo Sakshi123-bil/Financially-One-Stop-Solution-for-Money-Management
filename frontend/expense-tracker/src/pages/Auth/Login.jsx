@@ -12,11 +12,12 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-    const {updateUser} = useContext(UserContext)
+    const {updateUser} = useContext(UserContext);
+    const [loading , setLoading] = useState(false);
     const navigate = useNavigate();
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         if (!validateEmail(email)) {
             setError("PLease enter a valid email address");
             return;
@@ -33,12 +34,13 @@ const Login = () => {
                 email,
                 password,
             });
-
+            
             const { token, user } = response.data;
             if (token) {
                 localStorage.setItem("token", token);
                 updateUser(user);
                 localStorage.setItem("user", JSON.stringify(user));
+                setLoading(false);
                 navigate("/dashboard");
             }
         } catch (error) {
@@ -73,12 +75,12 @@ const Login = () => {
                         />
 
                         {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
-
-                        <button type="submit" className="btn-primary">LOGIN</button>
+                        
+                        <button type="submit" className="btn-primary cursor-pointer">{!loading? "LOGIN":"Loading.."}</button>
 
                         <p className="text-[13px] text-slate-800 mt-3">
                             Dont't have an account?{" "}
-                            <Link className="font-medium text-primary underline" to="/signup">SignUp</Link>
+                            <Link className="font-medium text-primary underline cursor-pointer" to="/signup">SignUp</Link>
                         </p>
 
                     </form>

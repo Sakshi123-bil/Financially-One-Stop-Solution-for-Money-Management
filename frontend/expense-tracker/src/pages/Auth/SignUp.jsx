@@ -15,13 +15,14 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-    const {updateUser} = useContext(UserContext)
+    const {updateUser} = useContext(UserContext);
+    const [loading , setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
+        setLoading(true);
        e.preventDefault();
-
        let profileImageUrl ="";
 
        if(!fullName){
@@ -55,6 +56,7 @@ const SignUp = () => {
         if(token){
             localStorage.setItem("token",token);
             updateUser(user);
+            setLoading(false);
             navigate("/dashboard");
         }
        }catch(error){
@@ -105,11 +107,11 @@ const SignUp = () => {
                     </div>
                     {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
-                    <button type="submit" className="btn-primary">SIGN UP</button>
+                    <button type="submit" className="btn-primary cursor-pointer">{!loading?"SIGN UP":"Loading.."}</button>
 
                     <p className="text-[13px] text-slate-800 mt-3">
                       Already have an account?{" "}
-                        <Link className="font-medium text-primary underline" to="/login">Login</Link>
+                        <Link className="font-medium text-primary underline cursor-pointer" to="/login">Login</Link>
                     </p>
 
                 </form>
