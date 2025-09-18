@@ -7,7 +7,7 @@ const ExpenseList = ({ transactions, onDelete, onDownload }) => {
     <div className="card">
       <div className="flex items-center justify-between">
         <h5 className="text-lg">Expense categories</h5>
-        <button className="card-bit" onClick={onDownload}> 
+        <button className="add-btn" onClick={onDownload}> 
            <div className='flex'><LuDownload className="text-base mt-1 mr-1"/><div>Download</div></div>
         </button>
       </div>
